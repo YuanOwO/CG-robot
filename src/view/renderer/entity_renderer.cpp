@@ -17,8 +17,8 @@ const animate::Animator* EntityRenderer::animatorFor(const world::entity::Entity
 }
 
 void EntityRenderer::render(const world::entity::Entity& entity) const {
-    const auto& collider = entity.collider();
-    drawCollider(collider);
+    // const auto& collider = entity.collider();
+    // drawCollider(collider);
 
     glPushMatrix();
     glTranslatef(entity.position().x, entity.position().y, entity.position().z);
