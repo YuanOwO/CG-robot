@@ -1,6 +1,7 @@
 #pragma once
 
 #include "graphics/camera.hpp"
+#include "graphics/projection.hpp"
 #include "math/vec3.hpp"
 
 namespace robot::game {
@@ -23,13 +24,18 @@ class CameraRig {
     /// @param factor 大於 1 拉近、小於 1 拉遠
     void zoom(float factor);
 
+    void setProjectionMode(graphics::ProjectionMode mode);
+
+    void changeProjectionMode();
+
     /// 度，[0, 360)；為 0 時看向 -z
     float yaw() const { return _yaw; }
     /// 度，正值抬頭
     float pitch() const { return _pitch; }
 
     graphics::Camera camera() const;
-    graphics::OrthoProjection projection() const;
+    graphics::Projection projection() const;
+    graphics::ProjectionMode projectionMode() const { return _mode; }
 
    private:
     Vec3 _target;
@@ -37,7 +43,9 @@ class CameraRig {
     // yaw 為 0 時看向 -z，與 OpenGL 眼睛座標的預設方向一致
     float _yaw = 45.0f;
     float _pitch = -20.0f;
-    float _distance = 3.0f;  // 公尺，只決定眼睛的位置，不影響畫面大小
+    float _distance = 20.0f;  // 公尺，只決定眼睛的位置，不影響畫面大小
+
+    graphics::ProjectionMode _mode = graphics::ProjectionMode::Perspective;
 
     // 平行投影沒有近大遠小，縮放要縮小 view volume，改 _distance 沒有效果
     float _zoom = 4.0f;

@@ -4,7 +4,7 @@
 
 namespace robot::graphics {
 
-void begin3D(int width, int height, const Camera& camera, const OrthoProjection& projection) {
+void begin3D(int width, int height, const Camera& camera, const Projection& projection) {
     glViewport(0, 0, width, height);
 
     glMatrixMode(GL_PROJECTION);
@@ -12,8 +12,9 @@ void begin3D(int width, int height, const Camera& camera, const OrthoProjection&
 
     // 零尺寸視窗時 glOrtho 的範圍無效
     if (width > 0 && height > 0) {
-        const OrthoProjection fitted = projection.fittedTo(static_cast<float>(width) / static_cast<float>(height));
-        glOrtho(fitted.left, fitted.right, fitted.bottom, fitted.top, fitted.nearPlane, fitted.farPlane);
+        const double aspect = static_cast<double>(width) / static_cast<double>(height);
+        const auto volume = graphics::volume(projection, aspect);
+        volume.apply();
     }
 
     glMatrixMode(GL_MODELVIEW);

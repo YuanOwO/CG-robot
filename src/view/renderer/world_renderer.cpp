@@ -12,7 +12,7 @@ const float AXIS_LENGTH = 8.0f;
 }  // namespace
 
 void WorldRenderer::render(const world::World& world, const graphics::Camera& camera,
-                           const graphics::OrthoProjection& projection, int width, int height) const {
+                           const graphics::Projection& projection, int width, int height) const {
     graphics::begin3D(width, height, camera, projection);
 
     _chunkRenderer.render(world.chunks());

@@ -26,7 +26,8 @@ class Player {
 
     PlayerInfo info() const;
     graphics::Camera camera() const { return _cameraRig.camera(); }
-    graphics::OrthoProjection projection() const { return _cameraRig.projection(); }
+    graphics::Projection projection() const { return _cameraRig.projection(); }
+    graphics::ProjectionMode projectionMode() const { return _cameraRig.projectionMode(); }
 
     void update(float dt, const engine::Input& input);
     void follow();
