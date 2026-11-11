@@ -1,6 +1,7 @@
 #pragma once
 
 #include "graphics/2d/canvas.hpp"
+#include "graphics/projection.hpp"
 #include "math/vec3.hpp"
 #include "world/chunk/core/biome.hpp"
 
@@ -12,8 +13,9 @@ struct HudInfo {
     double ticksPerSecond;
     float cameraYaw;
     float cameraPitch;
-    Vec3 playerVelocity;
+    graphics::ProjectionMode projectionMode;
     Vec3 playerPosition;
+    Vec3 playerVelocity;
     world::chunk::Biome playerBiome;
 };
 

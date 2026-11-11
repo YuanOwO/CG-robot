@@ -12,8 +12,8 @@ const float ZOOM_SPEED = 4.0f;        // 按住一秒放大或縮小的倍數
 
 }  // namespace
 
-CameraController::CameraTurn CameraController::update(float dt, const engine::Input& input) {
-    CameraTurn result;
+CameraController::CameraUpdate CameraController::update(float dt, const engine::Input& input) {
+    CameraUpdate result;
 
     // 用按住的狀態而不是按下事件：按住多久就轉多少，轉速與幀率無關
     float turnDirection = 0.0f;
@@ -46,6 +46,10 @@ CameraController::CameraTurn CameraController::update(float dt, const engine::In
     }
     // 以指數變化，不論目前的倍率，縮放的手感都一樣
     result.zoom = std::pow(ZOOM_SPEED, zoomDirection * dt);
+
+    if (input.pressed(Key::Backspace)) {
+        result.changeProjectionMode = true;
+    }
 
     return result;
 }

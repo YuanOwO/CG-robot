@@ -20,12 +20,14 @@ void Hud::render(graphics::Canvas& canvas, const HudInfo& info) const {
     std::snprintf(buffer, sizeof(buffer),
                   "FPS %.2f · TPS %.2f\n"
                   "Yaw %.1f° · Pitch %.1f°\n"
+                  "Projection: %s\n"
                   "X: %.2f · Y: %.2f · Z: %.2f\n"
                   "VX: %.2f · VY: %.2f · VZ: %.2f\n"
                   "Biome: %s",
-                  info.framesPerSecond, info.ticksPerSecond, info.cameraYaw, info.cameraPitch, info.playerPosition.x,
-                  info.playerPosition.y, info.playerPosition.z, info.playerVelocity.x, info.playerVelocity.y,
-                  info.playerVelocity.z, toString(info.playerBiome).c_str());
+                  info.framesPerSecond, info.ticksPerSecond, info.cameraYaw, info.cameraPitch,
+                  toString(info.projectionMode).c_str(), info.playerPosition.x, info.playerPosition.y,
+                  info.playerPosition.z, info.playerVelocity.x, info.playerVelocity.y, info.playerVelocity.z,
+                  toString(info.playerBiome).c_str());
     const std::string text = buffer;
 
     const int textWidth = static_cast<int>(std::ceil(getFontWidth(HUD_FONT, text)));

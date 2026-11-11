@@ -32,6 +32,10 @@ void Player::update(float dt, const engine::Input& input) {
     const auto turn = _cameraController.update(dt, input);
     _cameraRig.zoom(turn.zoom);
 
+    if (turn.changeProjectionMode) {
+        _cameraRig.changeProjectionMode();
+    }
+
     if (_cameraMode == CameraMode::Free) {
         _cameraRig.turn(turn.yaw);
         _cameraRig.tilt(turn.pitch);

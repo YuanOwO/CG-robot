@@ -9,13 +9,15 @@ namespace robot::game {
 
 class CameraController {
    public:
-    struct CameraTurn {
+    struct CameraUpdate {
         float yaw = 0.0f;    ///< 度，正值逆時針
         float pitch = 0.0f;  ///< 度，正值抬頭
         float zoom = 1.0f;   ///< 倍數，>1 放大，<1 縮小
+
+        bool changeProjectionMode = false;  ///< 是否切換投影模式
     };
 
-    CameraTurn update(float dt, const engine::Input& input);
+    CameraUpdate update(float dt, const engine::Input& input);
     // 停止 update 時呼叫：期間游標的位移不屬於這次拖曳，恢復時要重新記錄起點
     void reset() { _dragFrom.reset(); }
 

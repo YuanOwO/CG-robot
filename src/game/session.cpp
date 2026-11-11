@@ -24,13 +24,10 @@ void Session::renderWorld(int width, int height) const {
 
 void Session::renderHud(graphics::Canvas& canvas, double framesPerSecond, double ticksPerSecond) const {
     auto _playerInfo = _player.info();
-    view::HudInfo info{framesPerSecond,
-                       ticksPerSecond,
-                       _playerInfo.yaw,
-                       _playerInfo.pitch,
-                       _playerInfo.velocity,
-                       _playerInfo.position,
-                       _world.biomeAt(_playerInfo.position.x, _playerInfo.position.z)};
+    view::HudInfo info{framesPerSecond,          ticksPerSecond,
+                       _playerInfo.yaw,          _playerInfo.pitch,
+                       _player.projectionMode(), _playerInfo.position,
+                       _playerInfo.velocity,     _world.biomeAt(_playerInfo.position.x, _playerInfo.position.z)};
 
     _hud.render(canvas, info);
 }
