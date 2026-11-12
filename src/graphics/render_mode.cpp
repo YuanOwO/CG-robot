@@ -12,7 +12,7 @@ void begin3D(int width, int height, const Camera& camera, const Projection& proj
 
     // 零尺寸視窗時 glOrtho 的範圍無效
     if (width > 0 && height > 0) {
-        const double aspect = static_cast<double>(width) / static_cast<double>(height);
+        const float aspect = static_cast<float>(width) / static_cast<float>(height);
         const auto volume = graphics::volume(projection, aspect);
         volume.apply();
     }

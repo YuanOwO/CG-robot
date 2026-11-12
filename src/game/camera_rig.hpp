@@ -43,12 +43,14 @@ class CameraRig {
     // yaw 為 0 時看向 -z，與 OpenGL 眼睛座標的預設方向一致
     float _yaw = 45.0f;
     float _pitch = -20.0f;
-    float _distance = 20.0f;  // 公尺，只決定眼睛的位置，不影響畫面大小
+    // 公尺，眼睛到目標點的距離。透視投影時越遠畫面越小；平行投影的 view volume 也依它換算，
+    // 讓兩種投影在目標點處看到的範圍相同
+    float _distance = 3.0f;
 
     graphics::ProjectionMode _mode = graphics::ProjectionMode::Perspective;
 
-    // 平行投影沒有近大遠小，縮放要縮小 view volume，改 _distance 沒有效果
-    float _zoom = 4.0f;
+    // 縮放倍率：透視投影縮小視角，平行投影縮小 view volume，眼睛的位置都不變
+    float _zoom = 1.0f;
 };
 
 }  // namespace robot::game

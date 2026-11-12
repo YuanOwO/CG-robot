@@ -19,7 +19,7 @@ std::string toString(ProjectionMode mode) {
     }
 }
 
-ViewVolume ViewVolume::ortho(double left, double right, double bottom, double top, double nearPlane, double farPlane) {
+ViewVolume ViewVolume::ortho(float left, float right, float bottom, float top, float nearPlane, float farPlane) {
     if (nearPlane >= farPlane) {
         throw std::invalid_argument("nearPlane must be less than farPlane");
     }
@@ -27,9 +27,9 @@ ViewVolume ViewVolume::ortho(double left, double right, double bottom, double to
     return ViewVolume{ProjectionMode::Ortho, left, right, bottom, top, nearPlane, farPlane};
 }
 
-ViewVolume ViewVolume::perspective(double left, double right, double bottom, double top, double nearPlane,
-                                   double farPlane) {
-    if (nearPlane <= 0.0 || farPlane <= 0.0) {
+ViewVolume ViewVolume::perspective(float left, float right, float bottom, float top, float nearPlane,
+                                   float farPlane) {
+    if (nearPlane <= 0.0f || farPlane <= 0.0f) {
         throw std::invalid_argument("nearPlane and farPlane must be positive");
     }
 
@@ -50,20 +50,20 @@ void ViewVolume::apply() const {
     }
 }
 
-ViewVolume OrthoProjection::volume(double aspect) const {
-    double halfWidth = halfHeight * aspect;
+ViewVolume OrthoProjection::volume(float aspect) const {
+    const float halfWidth = halfHeight * aspect;
 
     return ViewVolume::ortho(-halfWidth, halfWidth, -halfHeight, halfHeight, nearPlane, farPlane);
 }
 
-ViewVolume PerspectiveProjection::volume(double aspect) const {
-    const double top = nearPlane * std::tan(radians(fovY) / 2.0);
-    const double right = top * aspect;
+ViewVolume PerspectiveProjection::volume(float aspect) const {
+    const float top = nearPlane * std::tan(radians(fovY) / 2.0f);
+    const float right = top * aspect;
 
     return ViewVolume::perspective(-right, right, -top, top, nearPlane, farPlane);
 }
 
-ViewVolume volume(const Projection& projection, double aspect) {
+ViewVolume volume(const Projection& projection, float aspect) {
     return std::visit([aspect](const auto& proj) { return proj.volume(aspect); }, projection);
 }
 

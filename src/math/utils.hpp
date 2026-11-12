@@ -15,17 +15,9 @@ inline float radians(float degree) {
     return degree * (PI / 180.0f);
 }
 
-inline double radians(double degree) {
-    return degree * (PI / 180.0);
-}
-
 /// 弧度換成角度
 inline float degrees(float radians) {
     return radians * (180.0f / PI);
-}
-
-inline double degrees(double radians) {
-    return radians * (180.0 / PI);
 }
 
 /// 換到 [0, 360) 內的同一個方向

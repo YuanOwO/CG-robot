@@ -11,34 +11,35 @@ std::string toString(ProjectionMode mode);
 
 struct ViewVolume {
     ProjectionMode kind;
-    double left, right, bottom, top;
-    double nearPlane, farPlane;
+    float left, right, bottom, top;
+    float nearPlane, farPlane;
 
-    static ViewVolume ortho(double left, double right, double bottom, double top, double nearPlane, double farPlane);
-    static ViewVolume perspective(double left, double right, double bottom, double top, double nearPlane,
-                                  double farPlane);
+    static ViewVolume ortho(float left, float right, float bottom, float top, float nearPlane, float farPlane);
+    static ViewVolume perspective(float left, float right, float bottom, float top, float nearPlane, float farPlane);
 
     void apply() const;
 };
 
 struct OrthoProjection {
-    double halfHeight = 20.0;
-    double nearPlane = -200.0;
-    double farPlane = 200.0;
+    float halfHeight = 20.0f;
+    float nearPlane = -200.0f;
+    float farPlane = 200.0f;
 
-    ViewVolume volume(double aspect) const;
+    ViewVolume volume(float aspect) const;
 };
 
 struct PerspectiveProjection {
-    double fovY = 60.0;  // 垂直方向的視角，單位度
-    double nearPlane = 0.1;
-    double farPlane = 200.0;
+    float fovY = 60.0f;  // 垂直方向的視角，單位度
+    float nearPlane = 0.1f;
+    // 世界以玩家為中心載入半徑 12 個 chunk（192 公尺）的範圍，相機又在玩家後方，
+    // 留一些餘裕才看得到最遠處的地形
+    float farPlane = 250.0f;
 
-    ViewVolume volume(double aspect) const;
+    ViewVolume volume(float aspect) const;
 };
 
 using Projection = std::variant<OrthoProjection, PerspectiveProjection>;
 
-ViewVolume volume(const Projection& projection, double aspect);
+ViewVolume volume(const Projection& projection, float aspect);
 
 }  // namespace robot::graphics
