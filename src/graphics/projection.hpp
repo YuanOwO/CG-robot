@@ -1,7 +1,11 @@
 #pragma once
 
+#include <array>
 #include <string>
 #include <variant>
+
+#include "graphics/camera.hpp"
+#include "math/vec3.hpp"
 
 namespace robot::graphics {
 
@@ -18,6 +22,11 @@ struct ViewVolume {
     static ViewVolume perspective(float left, float right, float bottom, float top, float nearPlane, float farPlane);
 
     void apply() const;
+
+    /// view volume 八個角在世界座標的位置：前四個在 near 平面、後四個在 far 平面，
+    /// 各自依左下、右下、右上、左上的順序
+    /// @param camera 這個 view volume 所屬的相機
+    std::array<Vec3, 8> corners(const Camera& camera) const;
 };
 
 struct OrthoProjection {
