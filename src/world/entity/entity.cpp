@@ -29,6 +29,7 @@ void Entity::tick(float dt, const World& world) {
     constexpr float STANCE_TRANSITION_DURATION = 0.5f;  // 轉換姿勢的時間固定為 0.5 秒
     constexpr float MOVE_FACING_RATIO = 0.5f;  // 身體偏向移動方向的比例，0 時一直朝視線，1 時完全朝移動方向
     constexpr float BODY_TURN_RATE = 10.0f;    // 身體朝向收斂到目標的速率 (1/s)，越大轉得越快
+    constexpr float HEAD_TURN_LIMIT = 45.0f;   // 站著不動時視線最多偏離身體幾度
 
     const auto intent = _brain->think(*this, world, dt);
 
@@ -60,6 +61,13 @@ void Entity::tick(float dt, const World& world) {
         float offset = degrees(std::atan2(sign * intent.sway, sign * intent.surge)) * MOVE_FACING_RATIO;
         float delta = wrapSignedDegrees(_look.yaw - offset - _yaw);
         _yaw = wrapDegrees(_yaw + delta * approach(BODY_TURN_RATE, dt));
+    } else {
+        // 站著不動時頭最多轉 HEAD_TURN_LIMIT 度，再轉下去身體就跟著轉，不會把頭轉到背後
+        const float delta = wrapSignedDegrees(_look.yaw - _yaw);
+        if (std::abs(delta) > HEAD_TURN_LIMIT) {
+            const float excess = delta > 0.0f ? delta - HEAD_TURN_LIMIT : delta + HEAD_TURN_LIMIT;
+            _yaw = wrapDegrees(_yaw + excess);
+        }
     }
 
     _age++;
