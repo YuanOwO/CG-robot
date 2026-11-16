@@ -49,4 +49,9 @@ Vec3 rotateAroundZ(const Vec3& vec, float degree) {
     return transformVector(mat, vec);
 }
 
+Vec3 rotateAroundAxis(const Vec3& vec, const Vec3& axis, float degree) {
+    auto mat = rotation(degree, axis);
+    return transformVector(mat, vec);
+}
+
 }  // namespace robot

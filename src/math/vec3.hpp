@@ -48,5 +48,6 @@ Vec3 normalize(const Vec3& vec);  ///< 單位向量；長度小於 EPSILON 時�
 Vec3 rotateAroundX(const Vec3& vec, float degree);
 Vec3 rotateAroundY(const Vec3& vec, float degree);
 Vec3 rotateAroundZ(const Vec3& vec, float degree);
+Vec3 rotateAroundAxis(const Vec3& vec, const Vec3& axis, float degree);
 
 }  // namespace robot
