@@ -100,7 +100,8 @@ void Game::render() {
     if (_screen) {
         _screen->render(canvas);
     } else if (_session) {
-        _session->renderHud(canvas, _engine.framesPerSecond(), _engine.ticksPerSecond());
+        _session->renderHud(canvas, _engine.framesPerSecond(), _engine.ticksPerSecond(), _engine.width(),
+                            _engine.height());
     }
 }
 

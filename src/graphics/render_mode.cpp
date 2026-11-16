@@ -4,16 +4,15 @@
 
 namespace robot::graphics {
 
-void begin3D(int width, int height, const Camera& camera, const Projection& projection) {
-    glViewport(0, 0, width, height);
+void begin3D(const Viewport& viewport, const Camera& camera, const Projection& projection) {
+    glViewport(viewport.x, viewport.y, viewport.width, viewport.height);
 
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
 
     // 零尺寸視窗時 glOrtho 的範圍無效
-    if (width > 0 && height > 0) {
-        const float aspect = static_cast<float>(width) / static_cast<float>(height);
-        const auto volume = graphics::volume(projection, aspect);
+    if (!viewport.empty()) {
+        const auto volume = graphics::volume(projection, viewport.aspect());
         volume.apply();
     }
 

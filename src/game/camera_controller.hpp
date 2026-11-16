@@ -4,17 +4,29 @@
 
 #include "common/point.hpp"
 #include "engine/input.hpp"
+#include "view/view_mode.hpp"
 
 namespace robot::game {
 
+/// 把相機相關的按鍵與滑鼠讀成這個 tick 要做的操作
 class CameraController {
    public:
     struct CameraUpdate {
-        float yaw = 0.0f;    ///< 度，正值逆時針
-        float pitch = 0.0f;  ///< 度，正值抬頭
-        float zoom = 1.0f;   ///< 倍數，>1 放大，<1 縮小
+        // 平移，公尺，沿相機自己的軸
+        float surge = 0.0f;  ///< 正值往前
+        float sway = 0.0f;   ///< 正值往右
+        float heave = 0.0f;  ///< 正值往上
 
-        bool changeProjectionMode = false;  ///< 是否切換投影模式
+        // 旋轉，度，繞相機自己的軸
+        float yaw = 0.0f;    ///< 正值往左轉
+        float pitch = 0.0f;  ///< 正值抬頭
+        float roll = 0.0f;   ///< 正值往右傾
+
+        float zoom = 1.0f;  ///< 倍數，>1 放大，<1 縮小
+
+        bool reset = false;             ///< 把相機放回機器人後方
+        bool toggleFollow = false;      ///< 切換跟隨 / 自由
+        std::optional<view::ViewMode> viewMode;  ///< 這個 tick 選擇的投影方式
     };
 
     CameraUpdate update(float dt, const engine::Input& input);

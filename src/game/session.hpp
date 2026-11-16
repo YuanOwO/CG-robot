@@ -22,7 +22,8 @@ class Session {
 
     // 分成兩段，讓 Game 能在 HUD 之上接著用同一個 2D 階段畫選單。
     void renderWorld(int width, int height) const;
-    void renderHud(graphics::Canvas& canvas, double framesPerSecond, double ticksPerSecond) const;
+    void renderHud(graphics::Canvas& canvas, double framesPerSecond, double ticksPerSecond, int width,
+                   int height) const;
 
    private:
     Seed _seed = 24622192;  // 隨便挑的數字，讓每次遊戲都一樣
