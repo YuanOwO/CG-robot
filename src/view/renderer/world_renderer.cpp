@@ -72,7 +72,8 @@ void drawViewVolume(const ViewVolumeOverlay& overlay) {
     std::vector<geometry::LineSegment3D> edges;
     for (std::size_t i = 0; i < 4; i++) {
         const std::size_t next = (i + 1) % 4;
-        edges.emplace_back(eye, corners[4 + i]);  // 從眼睛出發的四條稜
+        edges.emplace_back(eye, corners[4 + i]);                 // 從眼睛出發的四條稜
+        edges.emplace_back(corners[4 + i], corners[4 + next]);  // far 平面的四條邊
     }
     graphics::drawLines(edges, VOLUME_EDGE_COLOR, 2.0f);
 
