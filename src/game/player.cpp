@@ -186,7 +186,7 @@ view::SceneView Player::orthoView(view::ViewMode mode, const graphics::Viewport&
 }
 
 view::SceneView Player::perspectiveView(const graphics::Viewport& viewport) const {
-    return view::SceneView{viewport, _cameraRig.camera(), _cameraRig.projection(), "F4 Perspective", false};
+    return view::SceneView{viewport, _cameraRig.camera(), _cameraRig.projection(), "Perspective", false};
 }
 
 }  // namespace robot::game
