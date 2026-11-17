@@ -1,0 +1,46 @@
+\section{相機}
+\label{sec:camera}
+
+\subsection{六個自由度}
+
+相機只保存三個觀察參數：eye（$E$）、focus（$F$）與 view up（$V_{up}$），繪製時直接交給 \lstinline|gluLookAt|。
+六種運動都沿著或繞著相機自己的軸進行，也就是課本中由這三個參數建立的眼睛座標系 $\mat{u}, \mat{v}, \mat{w}$（視線為 $-\mat{w}$）。
+表~\ref{tab:camera-motions} 列出每種運動改變了哪些參數。
+
+\begin{table}[htbp]
+    \centering
+    \caption{相機的六種運動}
+    \label{tab:camera-motions}
+    \small
+    \begin{tabular}{llll}
+        \toprule
+        運動    & 沿 / 繞的軸      & 改變的參數        & 效果     \\
+        \midrule
+        surge & 沿 $-\mat{w}$ & $E$、$F$      & 往前、後移動 \\
+        sway  & 沿 $\mat{u}$  & $E$、$F$      & 往左、右移動 \\
+        heave & 沿 $\mat{v}$  & $E$、$F$      & 往上、下移動 \\
+        yaw   & 繞 $\mat{v}$  & $F$、$V_{up}$ & 左右轉頭   \\
+        pitch & 繞 $\mat{u}$  & $F$、$V_{up}$ & 抬頭、低頭  \\
+        roll  & 繞 $-\mat{w}$ & $V_{up}$     & 畫面傾斜   \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+平移時 $E$ 與 $F$ 一起移動，視線方向不變。旋轉以眼睛為中心，$F$ 繞著 $E$ 轉；
+$V_{up}$ 也跟著一起轉，所以抬頭越過正上方時畫面會自然翻轉，不會像固定 $V_{up} = (0, 1, 0)$ 時卡在正上方。
+
+\subsection{跟隨與自由模式}
+
+按 Tab 可以在兩種模式之間切換：
+
+\begin{itemize}
+    \item \textbf{跟隨}（預設）：相機與機器人的相對位置固定。機器人每走一步、轉一次身，
+          相機就跟著平移相同的距離，並繞著機器人轉相同的角度，所以機器人轉身時相機會繞到它的背後。
+    \item \textbf{自由}：相機留在原地，機器人可以走出畫面，適合從固定的位置觀察。
+\end{itemize}
+
+\subsection{投影}
+
+透視投影由 fovY 與 viewport 的寬高比算出 near 平面的邊界，再交給 \lstinline|glFrustum|。
+這組邊界也用來畫 view volume，畫出來的範圍因此一定與實際看到的一致。
+從正上方往下看時 $y$ 軸與視線平行，不能當作 view up，所以俯視改以 $-z$ 為畫面上方。
